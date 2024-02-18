@@ -1,0 +1,49 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: server-config
+data:
+  config.yaml: |
+    host: localhost
+    port: 8080
+    responses:
+    - path: /todo
+      statusCode: 200
+      response: |
+        [
+          {
+            "id": 1,
+            "title": "Take A Tour of Go",
+            "status": "In Progress"
+          },
+          {
+            "id": 2,
+            "title": "Read Effective Go",
+            "status": "To Do"
+          }
+        ]
+      headers:
+        Content-Type:
+        - application/json
+    - path: /todo/1
+      statusCode: 200
+      response: |
+        {
+          "id": 1,
+          "title": "Take A Tour of Go",
+          "status": "In Progress"
+        }
+      headers:
+        Content-Type:
+        - application/json
+    - path: /todo/2
+      statusCode: 200
+      response: |
+        {
+          "id": 2,
+          "title": "Read Effective Go",
+          "status": "To Do"
+        }
+      headers:
+        Content-Type:
+        - application/json

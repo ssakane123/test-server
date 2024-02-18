@@ -1,0 +1,24 @@
+test_name: This is a test when running a server using testdata/config.yaml
+
+stages:
+# It seems that Tavern only checks responses that are formatted in JSON
+# Due to this, the following test does not verify if the response is OK
+- name: The server should return OK upon requesting /status
+  request:
+    url: http://localhost:8080/status
+    method: GET
+  response:
+    status_code: 200
+    headers:
+      content-type: text/plain
+- name: The server should return JSON defined in testdata/config.yaml upon requesting /hello
+  request:
+    url: http://localhost:8080/hello
+    method: GET
+  response:
+    status_code: 200
+    headers:
+      content-type: application/json
+      server: nginx
+    json:
+      message: hello

@@ -1,0 +1,15 @@
+host: localhost
+port: 8080
+responses:
+- path: /status
+  statusCode: 200
+  response: OK
+  headers:
+    Content-Type:
+    - text/plain
+- path: /status
+  statusCode: 200
+  response: '{"message": "hello"}'
+  headers:
+    Content-Type:
+    - application/json
