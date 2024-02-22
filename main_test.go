@@ -22,7 +22,7 @@ func TestLoadServerConfig(t *testing.T) {
 			name:             "ShouldReturnResponsesDefinedInTheConfigFile",
 			serverConfigFile: "./testdata/config.yaml",
 			expectedServerConfig: &ServerConfig{
-				Host: "0.0.0.0",
+				Host: "localhost",
 				Port: 8080,
 				Responses: &Responses{
 					{
@@ -87,7 +87,7 @@ func TestLoadServerConfig(t *testing.T) {
 			name:             "ShouldReturnResponsesWithDefaultValues",
 			serverConfigFile: "./testdata/configWithDefaultValues.yaml",
 			expectedServerConfig: &ServerConfig{
-				Host: "0.0.0.0",
+				Host: "localhost",
 				Port: 8080,
 				Responses: &Responses{
 					{
