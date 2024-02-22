@@ -43,8 +43,11 @@ $ curl -s 'http://localhost:8080/todo/2' | jq
 ### Examples on a Docker environment
 
 ```shell
+# Set a config file
+$ CONFIG_FILE=./examples/todo-api-on-docker.yaml
+
 # Build Dockerfile
-$ docker image build -t test-server-on-docker:latest -f dockerfiles/docker.dockerfile .
+$ docker image build -t test-server-on-docker:latest --build-arg CONFIG_FILE=${CONFIG_FILE} -f dockerfiles/test-server.dockerfile .
 
 # Start a docker container with port forwarding to run a server
 $ docker container run -p 8080:8080 -d --name test-server test-server-on-docker:latest
@@ -84,8 +87,11 @@ $ curl -s 'http://localhost:8080/todo/2' | jq
 ### Examples on a Kubernetes environment
 
 ```shell
+# Set a config file
+$ CONFIG_FILE=./examples/todo-api.yaml
+
 # Build Dockerfile
-$ docker image build -t test-server-on-kubernetes:latest -f dockerfiles/kubernetes.dockerfile .
+$ docker image build -t test-server-on-kubernetes:latest --build-arg CONFIG_FILE=${CONFIG_FILE} -f dockerfiles/test-server.dockerfile .
 
 # Apply Kubernetes manifests into default namespace
 $ kubectl apply -f kubernetes-manifests/
