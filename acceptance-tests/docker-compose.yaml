@@ -1,0 +1,21 @@
+version: "3"
+services:
+  test-server:
+    build:
+      context: ../
+      dockerfile: ./dockerfiles/test-server.dockerfile
+    image: test-server:latest
+    container_name: test-server
+    healthcheck:
+      test: ["CMD-SHELL", "curl http://localhost:8080/"]
+      interval: 5s
+      retries: 3
+  tavern:
+    build:
+      context: ../
+      dockerfile: ./dockerfiles/tavern.dockerfile
+    image: tavern:latest
+    container_name: tavern
+    depends_on:
+      test-server:
+        condition: service_healthy

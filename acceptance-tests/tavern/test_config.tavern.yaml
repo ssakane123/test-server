@@ -5,7 +5,7 @@ stages:
 # Due to this, the following test does not verify if the response is OK
 - name: The server should return OK upon requesting /status
   request:
-    url: http://localhost:8080/status
+    url: http://test-server:8080/status
     method: GET
   response:
     status_code: 200
@@ -13,7 +13,7 @@ stages:
       content-type: text/plain
 - name: The server should return JSON defined in testdata/config.yaml upon requesting /hello
   request:
-    url: http://localhost:8080/hello
+    url: http://test-server:8080/hello
     method: GET
   response:
     status_code: 200

@@ -3,7 +3,7 @@ test_name: This is a test when running a server using configWithDefaultValues.ya
 stages:
 - name: The server should return default values upon requesting /
   request:
-    url: http://localhost:8080/
+    url: http://test-server:8080/
     method: GET
   response:
     status_code: 200

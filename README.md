@@ -144,31 +144,45 @@ go test .
 ### Acceptance Tests using testdata/config.yaml on a local environment
 
 ```shell
-# Run a server using testdata/config.yaml
-go run main.go -config testdata/config.yaml
+# Set variables used for docker compose
+DOCKER_COMPOSE_FILE=./acceptance-tests/docker-compose.yaml
+CONFIG_FILE=./testdata/config.yaml
+TAVERN_FILE=./acceptance-tests/tavern/test_config.tavern.yaml
 
-# Activate venv
-source venv/bin/activate
+# Build docker images used for the acceptance test
+docker compose -f ${DOCKER_COMPOSE_FILE} build \
+  --build-arg CONFIG_FILE=${CONFIG_FILE} \
+  --build-arg TAVERN_FILE=${TAVERN_FILE}
 
-# Run acceptance tests
-tavern-ci tavern/test_config.tavern.yaml
+# Run a server and the acceptance test
+docker compose -f ${DOCKER_COMPOSE_FILE} up -d
 
-# Deactivate venv
-deactivate
+# Check whether the acceptance test passed
+docker container logs tavern
+
+# Stop a server and the acceptance test
+docker compose -f ${DOCKER_COMPOSE_FILE} down
 ```
 
 ### Acceptance Tests using testdata/configWithDefaultValues.yaml
 
 ```shell
-# Run a server using testdata/configWithDefaultValues.yaml
-go run main.go -config testdata/configWithDefaultValues.yaml
+# Set variables used for docker compose
+DOCKER_COMPOSE_FILE=./acceptance-tests/docker-compose.yaml
+CONFIG_FILE=./testdata/configWithDefaultValues.yaml
+TAVERN_FILE=./acceptance-tests/tavern/test_config_with_default_values.tavern.yaml
 
-# Activate venv
-source venv/bin/activate
+# Build docker images used for the acceptance test
+docker compose -f ${DOCKER_COMPOSE_FILE} build \
+  --build-arg CONFIG_FILE=${CONFIG_FILE} \
+  --build-arg TAVERN_FILE=${TAVERN_FILE}
 
-# Run acceptance tests
-tavern-ci tavern/test_config_with_default_values.tavern.yaml
+# Run a server and the acceptance test
+docker compose -f ${DOCKER_COMPOSE_FILE} up -d
 
-# Deactivate venv
-deactivate
+# Check whether the acceptance test passed
+docker container logs tavern
+
+# Stop a server and the acceptance test
+docker compose -f ${DOCKER_COMPOSE_FILE} down
 ```
