@@ -100,7 +100,6 @@ func runServer(serverConfigFile string) error {
 	if err != nil {
 		return err
 	}
-	fmt.Printf("serverConfig.Responses: %v\n", serverConfig.Responses)
 
 	engine := gin.Default()
 	for i := 0; i < len(*serverConfig.Responses); i++ {
