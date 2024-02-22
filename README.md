@@ -44,7 +44,10 @@ $ curl -s 'http://localhost:8080/todo/2' | jq
 
 ```shell
 # Set a config file
-$ CONFIG_FILE=./examples/todo-api-on-docker.yaml
+$ CONFIG_FILE=./examples/todo-api.yaml
+
+# Change localhost in CONFIG_FILE to 0.0.0.0
+$ gsed -i 's/^host: localhost/host: 0.0.0.0/' ${CONFIG_FILE}
 
 # Build Dockerfile
 $ docker image build -t test-server-on-docker:latest --build-arg CONFIG_FILE=${CONFIG_FILE} -f dockerfiles/test-server.dockerfile .
@@ -82,6 +85,9 @@ $ curl -s 'http://localhost:8080/todo/2' | jq
   "status": "To Do",
   "title": "Read Effective Go"
 }
+
+# Revert 0.0.0.0 in CONFIG_FILE to localhost
+$ gsed -i 's/^host: 0.0.0.0/host: localhost/' ${CONFIG_FILE}
 ```
 
 ### Examples on a Kubernetes environment
@@ -149,6 +155,9 @@ DOCKER_COMPOSE_FILE=./acceptance-tests/docker-compose.yaml
 CONFIG_FILE=./testdata/config.yaml
 TAVERN_FILE=./acceptance-tests/tavern/test_config.tavern.yaml
 
+# Change localhost in CONFIG_FILE to 0.0.0.0
+gsed -i 's/^host: localhost/host: 0.0.0.0/' ${CONFIG_FILE}
+
 # Build docker images used for the acceptance test
 docker compose -f ${DOCKER_COMPOSE_FILE} build \
   --build-arg CONFIG_FILE=${CONFIG_FILE} \
@@ -162,6 +171,9 @@ docker container logs tavern
 
 # Stop a server and the acceptance test
 docker compose -f ${DOCKER_COMPOSE_FILE} down
+
+# Revert 0.0.0.0 in CONFIG_FILE to localhost
+gsed -i 's/^host: 0.0.0.0/host: localhost/' ${CONFIG_FILE}
 ```
 
 ### Acceptance Tests using testdata/configWithDefaultValues.yaml
@@ -172,6 +184,9 @@ DOCKER_COMPOSE_FILE=./acceptance-tests/docker-compose.yaml
 CONFIG_FILE=./testdata/configWithDefaultValues.yaml
 TAVERN_FILE=./acceptance-tests/tavern/test_config_with_default_values.tavern.yaml
 
+# Change localhost in CONFIG_FILE to 0.0.0.0
+gsed -i 's/^host: localhost/host: 0.0.0.0/' ${CONFIG_FILE}
+
 # Build docker images used for the acceptance test
 docker compose -f ${DOCKER_COMPOSE_FILE} build \
   --build-arg CONFIG_FILE=${CONFIG_FILE} \
@@ -185,4 +200,7 @@ docker container logs tavern
 
 # Stop a server and the acceptance test
 docker compose -f ${DOCKER_COMPOSE_FILE} down
+
+# Revert 0.0.0.0 in CONFIG_FILE to localhost
+gsed -i 's/^host: 0.0.0.0/host: localhost/' ${CONFIG_FILE}
 ```
